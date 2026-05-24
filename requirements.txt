@@ -1,10 +1,8 @@
 pandas==2.2.2
 numpy==1.26.4
-pyarrow==15.0.2
 requests==2.31.0
 tenacity==8.2.3
 python-dotenv==1.0.1
-pandera==0.18.3
 scipy==1.13.0
 statsmodels==0.14.2
 pymannkendall==1.4.3

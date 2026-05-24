@@ -8,9 +8,8 @@ from pathlib import Path
 def load_data() -> pd.DataFrame:
     """Load master dataset — cached for performance."""
     base = Path(__file__).resolve().parent.parent.parent
-    path = base / "data" / "processed" / "jakarta_master.parquet"
-    df = pd.read_parquet(path)
-    df["date"] = pd.to_datetime(df["date"])
+    path = base / "data" / "processed" / "jakarta_master.csv"
+    df = pd.read_csv(path, parse_dates=["date"])
     df = df.set_index("date")
     return df
 

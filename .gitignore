@@ -27,6 +27,7 @@ data/external/*
 !data/processed/.gitkeep
 !data/external/.gitkeep
 !data/processed/jakarta_master.parquet
+!data/processed/jakarta_master.csv
 
 # OS
 .DS_Store
