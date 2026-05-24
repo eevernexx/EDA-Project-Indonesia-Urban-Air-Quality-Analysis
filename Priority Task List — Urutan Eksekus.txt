@@ -1,0 +1,37 @@
+Priority Task List — Urutan Eksekusi
+Berdasarkan work plan di atas, ini urutan kerja yang critical path — kalo satu step skip, step berikutnya collapse.
+
+🔴 IMMEDIATE FIRST (Hari 1-2, sebelum nulis 1 baris analysis code)
+
+Register OpenAQ API key → openaq.org/register
+Init GitHub repo dengan struktur folder yang sudah didefinisikan
+Setup virtual environment + install dependencies awal
+Tulis dan jalankan coverage_audit.py → ini paling kritis
+Baca output audit, putuskan final city list berdasarkan data real, bukan asumsi
+
+
+🟡 SECOND BLOCK (Hari 3-6, setelah city list confirmed)
+
+Implement fetch_openaq.py dengan retry & caching
+Fetch weather data via Open-Meteo API untuk kota-kota terpilih
+Jalankan data cleaning notebook — document setiap keputusan
+Build air_quality_master.parquet — single source of truth
+
+
+🟢 THIRD BLOCK (Week 2, setelah data siap)
+
+Analysis 1: Mann-Kendall trend test
+Analysis 2: STL seasonal decomposition
+Analysis 3: Weather correlation
+Analysis 4: Spatial comparison
+Analysis 5: Anomaly detection
+COVID ITS analysis (per city)
+COVID DiD analysis (cross-city)
+
+
+🔵 LAST BLOCK (Week 3)
+
+Build Streamlit dashboard (page by page)
+Deploy ke Streamlit Cloud
+Tulis Medium article
+Polish README + publish + LinkedIn post

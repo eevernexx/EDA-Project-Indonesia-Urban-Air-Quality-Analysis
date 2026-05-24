@@ -1,0 +1,36 @@
+# Virtual Environment
+venv/
+env/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data (raw data jangan di-commit, terlalu besar)
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+
+# Keep folder structure and app data
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+!data/processed/jakarta_master.parquet
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
