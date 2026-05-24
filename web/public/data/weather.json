@@ -1,0 +1,48 @@
+{
+  "correlations": [
+    {
+      "variable": "Curah Hujan (mm)",
+      "rho": -0.471,
+      "pval": 0.0,
+      "direction": "reduces"
+    },
+    {
+      "variable": "Kelembapan (%)",
+      "rho": -0.444,
+      "pval": 0.0,
+      "direction": "reduces"
+    },
+    {
+      "variable": "Kecepatan Angin (km/jam)",
+      "rho": -0.264,
+      "pval": 0.0,
+      "direction": "reduces"
+    },
+    {
+      "variable": "Suhu (°C)",
+      "rho": 0.172,
+      "pval": 0.0,
+      "direction": "increases"
+    }
+  ],
+  "season": {
+    "dry": {
+      "min": 1.0,
+      "q1": 30.8,
+      "median": 40.4,
+      "q3": 49.6,
+      "max": 469.7,
+      "mean": 44.5
+    },
+    "wet": {
+      "min": 5.0,
+      "q1": 17.4,
+      "median": 26.7,
+      "q3": 37.6,
+      "max": 459.0,
+      "mean": 31.4
+    },
+    "diff_pct": 41.5,
+    "mannwhitney_p": 0.0
+  }
+}

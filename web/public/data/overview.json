@@ -1,0 +1,80 @@
+{
+  "kpis": {
+    "overall_mean": 38.0,
+    "who_multiple": 7.6,
+    "pct_exceed": 89.8,
+    "worst_day": 470.0,
+    "worst_date": "23 Aug 2021",
+    "best_annual_mean": 32.9,
+    "best_annual_year": 2022
+  },
+  "annual_chart": [
+    {
+      "year": 2019,
+      "mean": 43.2,
+      "std": 33.1
+    },
+    {
+      "year": 2020,
+      "mean": 35.1,
+      "std": 19.9
+    },
+    {
+      "year": 2021,
+      "mean": 39.6,
+      "std": 47.0
+    },
+    {
+      "year": 2022,
+      "mean": 32.9,
+      "std": 36.1
+    }
+  ],
+  "table": [
+    {
+      "year": 2019,
+      "count": 327.0,
+      "mean": 43.2,
+      "median": 41.2,
+      "std": 33.1,
+      "q25": 30.0,
+      "q75": 49.9,
+      "pct_exceed": 94.2
+    },
+    {
+      "year": 2020,
+      "count": 293.0,
+      "mean": 35.1,
+      "median": 32.8,
+      "std": 19.9,
+      "q25": 22.5,
+      "q75": 45.2,
+      "pct_exceed": 88.7
+    },
+    {
+      "year": 2021,
+      "count": 299.0,
+      "mean": 39.6,
+      "median": 34.0,
+      "std": 47.0,
+      "q25": 22.2,
+      "q75": 43.1,
+      "pct_exceed": 90.3
+    },
+    {
+      "year": 2022,
+      "count": 263.0,
+      "mean": 32.9,
+      "median": 27.0,
+      "std": 36.1,
+      "q25": 20.0,
+      "q75": 35.6,
+      "pct_exceed": 84.8
+    }
+  ],
+  "who": {
+    "annual": 5.0,
+    "h24": 15.0,
+    "ispu": 35
+  }
+}
