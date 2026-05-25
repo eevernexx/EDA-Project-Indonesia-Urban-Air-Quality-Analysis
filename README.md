@@ -1,15 +1,25 @@
 # 🌫️ Jakarta Air Quality Dashboard
 ### PM2.5 Analysis 2019–2023 | COVID-19 as a Natural Experiment
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-url.streamlit.app)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
+![React](https://img.shields.io/badge/React-Vite-61DAFB?logo=react&logoColor=black)
+![Statsmodels](https://img.shields.io/badge/Stats-Statsmodels%20%7C%20SciPy-8CAAE6)
+![Status](https://img.shields.io/badge/status-portfolio%20project-success)
+
+> An exploratory data analysis of Jakarta's air quality, using the COVID-19 lockdown as a natural experiment to isolate the effect of mobility restrictions on PM2.5.
 
 ---
 
 ## 📊 Project Overview
 
-An exploratory data analysis of Jakarta's air quality using 5 years of daily PM2.5 measurements from a reference-grade monitoring station. The project uses COVID-19 lockdown (PSBB) as a **natural experiment** to isolate the causal effect of mobility restrictions on air pollution — after controlling for weather and seasonality.
+An exploratory data analysis of Jakarta's air quality using 5 years of daily PM2.5 measurements from a reference-grade monitoring station. The project uses the COVID-19 lockdown (PSBB) as a **natural experiment** to isolate the causal effect of mobility restrictions on air pollution — after controlling for weather and seasonality.
 
-**Key Finding:** Jakarta's PSBB was associated with a statistically significant **17.4% reduction in PM2.5** (95%CI: -31.7% to -0.0%, p=0.050), after controlling for weather confounders — despite the naive before/after comparison showing virtually no change (-0.1%).
+**Key Finding:** Jakarta's PSBB was associated with a statistically significant **17.4% reduction in PM2.5** (95% CI: -31.7% to -0.0%, p=0.050), after controlling for weather confounders — despite the naive before/after comparison showing virtually no change (-0.1%).
+
+This repository ships **two front-ends** for the same analysis:
+- A **Streamlit** multi-page dashboard (`app/`) for rapid, Python-native exploration.
+- A **React + Vite + Tailwind** dashboard (`web/`) in Bahasa Indonesia, fed by static JSON exported from the analysis.
 
 ---
 
@@ -18,7 +28,7 @@ An exploratory data analysis of Jakarta's air quality using 5 years of daily PM2
 | Finding | Value | Method |
 |---|---|---|
 | Jakarta mean PM2.5 (2019–2022) | 38.0 µg/m³ | Descriptive stats |
-| Above WHO Annual Guideline | **7.6x** | WHO threshold comparison |
+| Above WHO Annual Guideline | **7.6×** | WHO threshold comparison |
 | Days exceeding WHO 24h guideline | **89.8%** | Threshold analysis |
 | Dry season vs wet season | **+41.5% higher** | Mann-Whitney U (p<0.001) |
 | PSBB weather-adjusted effect | **-17.4% PM2.5** | Interrupted Time Series |
@@ -29,10 +39,11 @@ An exploratory data analysis of Jakarta's air quality using 5 years of daily PM2
 
 ## 🗂️ Project Structure
 ```
-indonesia-air-quality-eda/
+EDA-Project-Indonesia-Urban-Air-Quality-Analysis/
 ├── data/
-│   ├── raw/openaq/          # Raw API responses (gitignored)
-│   ├── processed/           # Analysis-ready master dataset
+│   ├── raw/                 # Raw API responses (gitignored)
+│   ├── interim/             # Intermediate artifacts (gitignored)
+│   ├── processed/           # Analysis-ready master dataset (CSV + Parquet)
 │   └── external/            # Reference data (PSBB timeline)
 ├── notebooks/
 │   ├── 01_coverage_audit.ipynb      # OpenAQ data availability check
@@ -41,20 +52,33 @@ indonesia-air-quality-eda/
 │   ├── 04_fetch_weather.ipynb       # Open-Meteo ERA5 weather data
 │   ├── 05_eda_temporal.ipynb        # Trend & seasonal analysis
 │   ├── 06_covid_analysis.ipynb      # ITS regression + counterfactual
-│   └── 07_weather_correlation.ipynb # Weather-PM2.5 coupling
+│   └── 07_weather_correlation.ipynb # Weather–PM2.5 coupling
 ├── src/
 │   ├── config.py            # Constants, paths, API config
-│   └── data/
-│       ├── fetch_openaq.py  # OpenAQ API client
-│       └── fetch_weather.py # Open-Meteo fetcher
-├── app/
+│   ├── data/                # API clients & validators
+│   │   ├── fetch_openaq.py  # OpenAQ API client
+│   │   ├── fetch_bmkg.py    # BMKG / weather fetcher
+│   │   └── validators.py
+│   ├── analysis/            # Statistical analysis helpers
+│   ├── processing/          # Cleaning & feature engineering
+│   └── viz/                 # Plotting helpers
+├── app/                     # Streamlit dashboard
 │   ├── streamlit_app.py     # Main dashboard entry
+│   ├── components/
 │   └── pages/
 │       ├── 1_Overview.py
 │       ├── 2_Temporal_Trends.py
 │       ├── 3_Weather_Impact.py
 │       └── 4_COVID_Experiment.py
-└── reports/figures/         # Exported HTML charts
+├── web/                     # React + Vite + Tailwind dashboard (Bahasa Indonesia)
+│   ├── src/                 # App, pages, components, lib
+│   └── public/data/         # Static JSON consumed by the web app
+├── scripts/
+│   └── export_web_data.py   # Exports analysis → static JSON for web/
+├── reports/figures/         # Exported HTML charts
+├── tests/
+├── requirements.txt
+└── runtime.txt              # Python 3.11 (Streamlit Cloud pin)
 ```
 
 ---
@@ -80,7 +104,7 @@ indonesia-air-quality-eda/
 
 **Weather Correlation**
 - Spearman rank correlation (non-parametric, robust to outliers)
-- Lag analysis for precipitation wet deposition effect
+- Lag analysis for precipitation wet-deposition effect
 
 **COVID-19 Natural Experiment**
 - Interrupted Time Series (ITS) regression
@@ -89,29 +113,33 @@ indonesia-air-quality-eda/
 - Controls: weather covariates + month fixed effects
 
 ### Data Quality
-- Reference-grade monitor only (Jakarta Central, location_id=8637)
+- Reference-grade monitor only (Jakarta Central, `location_id=8637`)
 - Low-coverage days excluded (< 75% hourly completeness)
 - Extreme values removed (> 500 µg/m³, sensor malfunction threshold)
-- Overall coverage: 96.7% (2019–2022), 2023 excluded from trend analysis
+- Overall coverage: 96.7% (2019–2022); 2023 excluded from trend analysis
 
 ### Known Limitations
 - Single monitoring station — may not represent all Jakarta districts
-- ITS confidence interval borderline (-31.7% to -0.0%) — interpret cautiously
-- No control city available for Difference-in-Differences design
-- Residual autocorrelation (DW=1.40), partially addressed by HAC SE
+- ITS confidence interval is borderline (-31.7% to -0.0%) — interpret cautiously
+- No control city available for a Difference-in-Differences design
+- Residual autocorrelation (DW=1.40), only partially addressed by HAC SE
 
 ---
 
 ## 🚀 Run Locally
 
+### 1. Clone the repository
 ```bash
-# Clone repo
-git clone https://github.com/eevernexx/jakarta-air-quality-eda.git
-cd jakarta-air-quality-eda
+git clone https://github.com/eevernexx/EDA-Project-Indonesia-Urban-Air-Quality-Analysis.git
+cd EDA-Project-Indonesia-Urban-Air-Quality-Analysis
+```
 
-# Setup environment
+### 2. Streamlit dashboard (Python)
+```bash
+# Set up environment
 python -m venv venv
-venv\Scripts\activate  # Windows
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # macOS / Linux
 
 # Install dependencies
 pip install -r requirements.txt
@@ -119,6 +147,16 @@ pip install -r requirements.txt
 # Run dashboard
 streamlit run app/streamlit_app.py
 ```
+
+### 3. Web dashboard (React + Vite)
+```bash
+cd web
+npm install
+npm run dev      # local dev server
+npm run build    # production build → web/dist
+```
+> The web app reads pre-exported static JSON from `web/public/data/`.
+> Regenerate it from the analysis with `python scripts/export_web_data.py`.
 
 ---
 
@@ -128,18 +166,18 @@ streamlit run app/streamlit_app.py
 |---|---|
 | Data | Pandas, PyArrow, Requests |
 | Statistics | SciPy, Statsmodels, PyMannKendall |
-| Visualization | Plotly, Folium |
-| Dashboard | Streamlit |
+| Visualization | Plotly, Folium, Recharts |
+| Dashboards | Streamlit, React + Vite + Tailwind CSS |
 | Data Sources | OpenAQ API v3, Open-Meteo ERA5 |
 
 ---
 
 ## 👤 Author
 
-**Aqsel** — Fresh Graduate, Informatics Engineering  
-Universitas Dian Nuswantoro (Udinus), Semarang  
+**Aqsel** — Fresh Graduate, Informatics Engineering
+Universitas Dian Nuswantoro (Udinus), Semarang
 
-[![GitHub](https://img.shields.io/badges/github)](https://github.com/eevernexx)
+[![GitHub](https://img.shields.io/badge/GitHub-eevernexx-181717?logo=github&logoColor=white)](https://github.com/eevernexx)
 
 ---
 
