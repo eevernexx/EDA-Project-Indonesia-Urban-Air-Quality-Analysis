@@ -43,7 +43,7 @@ export default function Overview() {
 
       {data && (
         <>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <KpiCard
               icon={DropletIcon}
               tone="error"
@@ -82,11 +82,11 @@ export default function Overview() {
             <b>5 µg/m³</b> untuk rata-rata setahun.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
             <ChartCard
               title="Rata-rata Polusi per Tahun"
               subtitle="Rata-rata tahunan dibandingkan dengan batas aman"
-              className="xl:col-span-2"
+              className="lg:col-span-2"
               action={
                 <div className="hidden items-center gap-3 text-xs sm:flex">
                   <Legend color={CHART.green} label="Baik" />

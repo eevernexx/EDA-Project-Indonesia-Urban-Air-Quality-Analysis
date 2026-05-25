@@ -42,11 +42,11 @@ export default function Weather() {
 
       {data && (
         <>
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <ChartCard
               title="Apa yang Membersihkan atau Memperburuk Udara?"
               subtitle="Hijau = membuat udara lebih bersih · Merah = membuat lebih kotor · batang lebih panjang = pengaruh lebih kuat"
-              className="xl:col-span-2"
+              className="lg:col-span-2"
             >
               <div className="h-[280px]">
                 <ResponsiveContainer width="100%" height="100%">
@@ -98,11 +98,11 @@ export default function Weather() {
             </Card>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
             <ChartCard
               title="Musim Kemarau vs Musim Hujan"
               subtitle={`Kotak = rentang sebagian besar hari · garis = hari tengah · ◆ = rata-rata · skala dibatasi ${SCALE_MAX}`}
-              className="xl:col-span-2"
+              className="lg:col-span-2"
             >
               <div className="space-y-6 py-2">
                 <BoxRow label="Musim Kemarau (Mei–Okt)" color={CHART.orange} stats={data.season.dry} />
