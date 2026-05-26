@@ -14,6 +14,14 @@ export default function Header({ onMenu }) {
       </button>
 
       <div className="ml-auto flex items-center gap-2">
+        <a
+          href="https://eda-project-indonesia-urban-air-quality-analysis-mdxkzqjiadxau.streamlit.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-10 items-center gap-2 rounded-full border border-gray-200 px-4 text-sm font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+        >
+          Streamlit App
+        </a>
         <button
           onClick={toggle}
           className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
